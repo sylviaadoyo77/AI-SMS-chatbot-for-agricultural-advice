@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings - AgriChatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .settings-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .setting-item {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        .status-badge {
+            font-size: 0.8rem;
+        }
+        .config-status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-seedling me-2"></i>AgriChatbot
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/super-dashboard">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/queries">
+                            <i class="fas fa-question-circle me-1"></i>All Queries
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/knowledge-base">
+                            <i class="fas fa-book me-1"></i>Knowledge Base
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/experts">
+                            <i class="fas fa-user-tie me-1"></i>Experts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">
+                            <i class="fas fa-users-cog me-1"></i>Admin Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/approvals">
+                            <i class="fas fa-user-check me-1"></i>Admin Approvals
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/system-logs">
+                            <i class="fas fa-clipboard-list me-1"></i>System Logs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/settings">
+                            <i class="fas fa-cog me-1"></i>System Settings
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <span class="nav-link text-light">
+                            <i class="fas fa-user me-1"></i>{{ session.get('admin_username', 'Admin') }}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/admin/logout">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="fas fa-cog me-2"></i>System Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Configuration Status -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="config-status {% if twilio_configured %}bg-success text-white{% else %}bg-warning{% endif %}">
+                                    <h5><i class="fas fa-sms me-2"></i>Twilio Configuration</h5>
+                                    <p class="mb-0">
+                                        {% if twilio_configured %}
+                                        <i class="fas fa-check-circle me-1"></i>Properly configured
+                                        {% else %}
+                                        <i class="fas fa-exclamation-triangle me-1"></i>Not configured
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="config-status {% if db_configured %}bg-success text-white{% else %}bg-danger text-white{% endif %}">
+                                    <h5><i class="fas fa-database me-2"></i>Database Configuration</h5>
+                                    <p class="mb-0">
+                                        {% if db_configured %}
+                                        <i class="fas fa-check-circle me-1"></i>Properly configured
+                                        {% else %}
+                                        <i class="fas fa-exclamation-circle me-1"></i>Not configured
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SMS Settings -->
+                        <div class="settings-card">
+                            <h4 class="mb-3"><i class="fas fa-comment-sms me-2"></i>SMS Settings</h4>
+                            
+                            <div class="setting-item">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="smsEnabled" {% if settings.sms_enabled %}checked{% endif %}>
+                                    <label class="form-check-label" for="smsEnabled">
+                                        Enable SMS Messaging
+                                    </label>
+                                </div>
+                                <small class="text-muted">When disabled, the system will not send or receive SMS messages</small>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <label for="maxSmsLength" class="form-label">Maximum SMS Length</label>
+                                <input type="number" class="form-control" id="maxSmsLength" value="{{ settings.max_sms_length }}">
+                                <small class="text-muted">Maximum characters per SMS message (typically 160 for standard SMS)</small>
+                            </div>
+                        </div>
+
+                        <!-- AI Settings -->
+                        <div class="settings-card">
+                            <h4 class="mb-3"><i class="fas fa-robot me-2"></i>AI Settings</h4>
+                            
+                            <div class="setting-item">
+                                <label for="aiThreshold" class="form-label">AI Confidence Threshold</label>
+                                <input type="range" class="form-range" id="aiThreshold" min="0.1" max="1.0" step="0.1" value="{{ settings.ai_threshold }}">
+                                <div class="d-flex justify-content-between">
+                                    <small>Low Confidence</small>
+                                    <small id="thresholdValue">{{ settings.ai_threshold }}</small>
+                                    <small>High Confidence</small>
+                                </div>
+                                <small class="text-muted">Queries with confidence below this threshold will be escalated to experts</small>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="autoEscalate" {% if settings.auto_escalate %}checked{% endif %}>
+                                    <label class="form-check-label" for="autoEscalate">
+                                        Auto-Escalate Low Confidence Queries
+                                    </label>
+                                </div>
+                                <small class="text-muted">When enabled, queries with low AI confidence are automatically sent to experts</small>
+                            </div>
+                        </div>
+
+                        <!-- System Settings -->
+                        <div class="settings-card">
+                            <h4 class="mb-3"><i class="fas fa-server me-2"></i>System Settings</h4>
+                            
+                            <div class="setting-item">
+                                <label for="responseTimeout" class="form-label">Expert Response Timeout</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="responseTimeout" value="{{ settings.response_timeout }}">
+                                    <span class="input-group-text">hours</span>
+                                </div>
+                                <small class="text-muted">Time before unanswered queries are reminded or reassigned</small>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <label for="defaultLanguage" class="form-label">Default Language</label>
+                                <select class="form-select" id="defaultLanguage">
+                                    <option value="auto" {% if settings.default_language == 'auto' %}selected{% endif %}>Auto-detect</option>
+                                    <option value="en" {% if settings.default_language == 'en' %}selected{% endif %}>English</option>
+                                    <option value="sw" {% if settings.default_language == 'sw' %}selected{% endif %}>Swahili</option>
+                                </select>
+                                <small class="text-muted">Default language for responses when auto-detection fails</small>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="maintenanceMode" {% if settings.maintenance_mode %}checked{% endif %}>
+                                    <label class="form-check-label" for="maintenanceMode">
+                                        Maintenance Mode
+                                    </label>
+                                </div>
+                                <small class="text-muted">When enabled, the system will display a maintenance message to users</small>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button class="btn btn-secondary me-md-2" id="resetSettings">
+                                <i class="fas fa-undo me-1"></i>Reset to Defaults
+                            </button>
+                            <button class="btn btn-primary" id="saveSettings">
+                                <i class="fas fa-save me-1"></i>Save Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-3 bg-dark text-white text-center">
+        <p class="mb-0">AgriChatbot System Settings &copy; 2025 - Catholic University of Eastern Africa</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update threshold value display
+        const thresholdSlider = document.getElementById('aiThreshold');
+        const thresholdValue = document.getElementById('thresholdValue');
+        
+        thresholdSlider.addEventListener('input', function() {
+            thresholdValue.textContent = this.value;
+        });
+
+        // Save settings
+        document.getElementById('saveSettings').addEventListener('click', function() {
+            // In a real implementation, this would send the settings to the server
+            alert('Settings would be saved here. This would send the values to the server for persistence.');
+        });
+
+        // Reset settings
+        document.getElementById('resetSettings').addEventListener('click', function() {
+            if(confirm('Are you sure you want to reset all settings to default values?')) {
+                // In a real implementation, this would reset to default values
+                alert('Settings would be reset to default values.');
+            }
+        });
+    </script>
+</body>
+</html>

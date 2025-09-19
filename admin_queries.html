@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Queries - AgriChatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .query-table {
+            font-size: 0.9rem;
+        }
+        .query-text {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .status-badge {
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-seedling me-2"></i>AgriChatbot
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/super-dashboard">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/queries">
+                            <i class="fas fa-question-circle me-1"></i>All Queries
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">
+                            <i class="fas fa-users-cog me-1"></i>Admin Users
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <span class="nav-link text-light">
+                            <i class="fas fa-user me-1"></i>{{ session.get('admin_username', 'Admin') }}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/admin/logout">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="fas fa-question-circle me-2"></i>All Farmer Queries</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white text-center mb-3">
+                                    <div class="card-body">
+                                        <h5>Total Queries</h5>
+                                        <h2>{{ statistics.total_queries }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-info text-white text-center mb-3">
+                                    <div class="card-body">
+                                        <h5>AI Answered</h5>
+                                        <h2>{{ statistics.status_counts.get('answered_ai', 0) }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-white text-center mb-3">
+                                    <div class="card-body">
+                                        <h5>Escalated</h5>
+                                        <h2>{{ statistics.status_counts.get('escalated', 0) }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-secondary text-white text-center mb-3">
+                                    <div class="card-body">
+                                        <h5>Expert Answered</h5>
+                                        <h2>{{ statistics.status_counts.get('answered_expert', 0) }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">Query Details</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover query-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Farmer Phone</th>
+                                <th>Location</th>
+                                <th>Query</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for query in queries %}
+                            <tr>
+                                <td>{{ query.query_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>{{ query.phone_number }}</td>
+                                <td>{{ query.location }}</td>
+                                <td class="query-text" title="{{ query.query_text }}">
+                                    {{ query.query_text }}
+                                </td>
+                                <td>
+                                    <span class="badge 
+                                        {% if query.status == 'answered_ai' %}bg-success
+                                        {% elif query.status == 'escalated' %}bg-warning
+                                        {% elif query.status == 'answered_expert' %}bg-info
+                                        {% else %}bg-secondary{% endif %} status-badge">
+                                        {{ query.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-query" 
+                                            data-query="{{ query.query_text }}"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#queryModal">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Query Modal -->
+    <div class="modal fade" id="queryModal" tabindex="-1" aria-labelledby="queryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="queryModalLabel">Query Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Query Text:</label>
+                        <p id="modalQueryText" class="border p-3 bg-light"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-5 py-3 bg-dark text-white text-center">
+        <p class="mb-0">AgriChatbot Query Management System &copy; 2025</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // View query details in modal
+        document.querySelectorAll('.view-query').forEach(button => {
+            button.addEventListener('click', function() {
+                const queryText = this.getAttribute('data-query');
+                document.getElementById('modalQueryText').textContent = queryText;
+            });
+        });
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Search queries...';
+            searchInput.className = 'form-control mb-3';
+            
+            const table = document.querySelector('table');
+            const rows = table.querySelectorAll('tbody tr');
+            
+            searchInput.addEventListener('keyup', function() {
+                const searchText = this.value.toLowerCase();
+                
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchText) ? '' : 'none';
+                });
+            });
+            
+            table.parentNode.insertBefore(searchInput, table);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Super Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Super Admin Debug Tool</h1>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Current Super Admin Status</h2>
+            </div>
+            <div class="card-body">
+                <div id="status"></div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Reset Super Admin Password</h2>
+            </div>
+            <div class="card-body">
+                <form id="resetForm">
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Reset Password</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Create New Super Admin</h2>
+            </div>
+            <div class="card-body">
+                <form id="createForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create New Super Admin</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Danger Zone</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-danger">Warning: This will delete ALL super admin accounts. Use with caution!</p>
+                <button id="deleteAllBtn" class="btn btn-danger">Delete All Super Admin Accounts</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load current status
+        fetch('/admin/debug-super-admin')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerHTML = `
+                    <p><strong>Number of super admins:</strong> ${data.super_admin_count}</p>
+                    <pre>${JSON.stringify(data.super_admins, null, 2)}</pre>
+                `;
+            });
+        
+        // Handle password reset
+        document.getElementById('resetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('action', 'reset_password');
+            formData.append('new_password', document.getElementById('new_password').value);
+            
+            fetch('/admin/fix-super-admin', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);
+                location.reload();
+            });
+        });
+        
+        // Handle create new super admin
+        document.getElementById('createForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('action', 'create_new');
+            formData.append('username', document.getElementById('username').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('password', document.getElementById('password').value);
+            
+            fetch('/admin/fix-super-admin', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);
+                location.reload();
+            });
+        });
+        
+        // Handle delete all super admins
+        document.getElementById('deleteAllBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete ALL super admin accounts? This cannot be undone!')) {
+                const formData = new FormData();
+                formData.append('action', 'delete_all');
+                
+                fetch('/admin/fix-super-admin', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || data.error);
+                    location.reload();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

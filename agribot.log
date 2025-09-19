@@ -1,0 +1,76 @@
+2025-08-20 11:58:18,135 - app - INFO - Africa's Talking initialized successfully.
+2025-08-20 11:58:19,895 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:14:43,625 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:14:45,222 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:29:41,281 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:29:42,998 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:54:03,030 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:54:04,700 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 13:54:09,521 - app - ERROR - Error loading admin dashboard: admin_dashboard.html
+2025-08-21 13:54:37,742 - app - ERROR - Error loading admin dashboard: admin_dashboard.html
+2025-08-21 14:17:47,837 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 14:17:49,472 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 14:18:25,579 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 14:18:26,965 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 15:19:20,982 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 15:41:01,094 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 15:41:15,506 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 15:41:25,841 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 15:53:33,262 - app - INFO - Africa's Talking initialized successfully.
+2025-08-21 22:06:18,123 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:21:24,324 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:21:25,302 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:22:11,974 - app - INFO - Response sent to +254700000001 for query 283194e2-dd2d-45ea-b36d-96701f85e1fc.
+2025-08-22 10:22:14,848 - app - INFO - Response sent to +254700000002 for query 9ad0ae20-ae79-42b2-a121-d377b790b74b.
+2025-08-22 10:22:17,688 - app - INFO - Response sent to +254700000003 for query ba9e439e-0e97-4516-94cb-dd2a88005142.
+2025-08-22 10:22:20,534 - app - INFO - Response sent to +254700000004 for query 88fbe5f4-5ea9-4c95-97ad-470504177141.
+2025-08-22 10:22:23,350 - app - INFO - Response sent to +254700000005 for query 964620ac-19b9-4d4c-ba52-c593fa961d0e.
+2025-08-22 10:22:26,174 - app - INFO - Response sent to +254700000006 for query 44e51a66-56fa-41b5-9da0-0ab46780fb0d.
+2025-08-22 10:41:50,692 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:45:26,560 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:46:23,582 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:51:03,520 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:51:04,988 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:54:12,468 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 10:54:13,920 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:34:39,952 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:34:49,889 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:34:51,244 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:36:45,065 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:36:46,483 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:38:29,630 - app - ERROR - Error loading admin dashboard: 'stats' is undefined
+2025-08-22 11:41:18,177 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:41:28,823 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:41:30,244 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:43:26,920 - app - ERROR - Error loading expert dashboard: (1054, "Unknown column 'Q.phone_number' in 'field list'")
+2025-08-22 11:43:33,977 - app - ERROR - Error loading expert dashboard: (1054, "Unknown column 'Q.phone_number' in 'field list'")
+2025-08-22 11:47:38,463 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:49:00,019 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:49:01,378 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:49:10,219 - app - ERROR - Error loading expert dashboard: (1054, "Unknown column 'ER.assigned_date' in 'order clause'")
+2025-08-22 11:49:52,957 - app - ERROR - Error loading expert dashboard: (1054, "Unknown column 'ER.assigned_date' in 'order clause'")
+2025-08-22 11:53:24,611 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:54:44,196 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 11:54:45,670 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:00:52,419 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:03:51,990 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:03:53,451 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:08:14,042 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:08:15,512 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:50:02,223 - app - ERROR - Error adding new article: (1054, "Unknown column 'created_at' in 'field list'")
+2025-08-22 12:53:19,872 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:53:21,481 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:57:22,074 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 12:57:23,567 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 13:01:32,025 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 13:02:12,185 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 13:02:13,713 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 13:04:20,616 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 13:04:22,171 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 13:20:25,883 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 14:55:40,713 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 14:55:41,632 - app - INFO - Africa's Talking initialized successfully.
+2025-08-22 15:24:37,478 - app - INFO - Africa's Talking initialized successfully.
+2025-08-23 14:32:37,170 - app - INFO - Africa's Talking initialized successfully.
+2025-08-23 14:32:38,883 - app - INFO - Africa's Talking initialized successfully.
+2025-08-23 15:40:34,878 - app - INFO - Africa's Talking initialized successfully.

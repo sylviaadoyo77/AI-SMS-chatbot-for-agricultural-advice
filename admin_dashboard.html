@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AgriChatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        .dashboard-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            height: 100%;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .recent-queries, .quick-actions {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            height: fit-content;
+        }
+        
+        .nav-link {
+            color: #495057;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: #e9ecef;
+            color: #4b6cb7;
+        }
+        
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4 class="mb-4"><i class="fas fa-seedling me-2"></i>AgriChatbot</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/queries">
+                            <i class="fas fa-question-circle me-2"></i>All Queries
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/knowledge-base">
+                            <i class="fas fa-book me-2"></i>Knowledge Base
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/experts">
+                            <i class="fas fa-user-tie me-2"></i>Experts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/settings">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a href="/admin/logout" class="nav-link text-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <!-- Header -->
+                <div class="dashboard-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1><i class="fas fa-seedling me-2"></i>Admin Dashboard</h1>
+                            <p class="mb-0">Welcome, {{ session.get('admin_username', 'Admin') | e }}</p>
+                        </div>
+                        <div>
+                            <span class="badge bg-light text-dark p-2">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                {{ session.get('admin_role') | capitalize }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert Management -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-user-tie me-2"></i>Expert Management</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <a href="/admin/experts" class="btn btn-info me-2">
+                                        <i class="fas fa-users me-1"></i>Manage Experts
+                                    </a>
+                                    <a href="/expert/dashboard" class="btn btn-warning me-2">
+                                        <i class="fas fa-hands-helping me-1"></i>Review Escalated Queries
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-question-circle me-2"></i>Total Queries</h5>
+                            <div class="stat-number text-primary">{{ statistics.total_queries }}</div>
+                            <small class="text-muted">All time queries</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-check-circle me-2"></i>AI Answered</h5>
+                            <div class="stat-number text-success">{{ statistics.ai_answered }}</div>
+                            <small class="text-muted">{{ "%.1f"|format((statistics.ai_answered / statistics.total_queries * 100) if statistics.total_queries > 0 else 0) }}% success rate</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Escalated</h5>
+                            <div class="stat-number text-warning">{{ statistics.escalated }}</div>
+                            <small class="text-muted">Awaiting expert response</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-user-tie me-2"></i>Expert Answered</h5>
+                            <div class="stat-number text-info">{{ statistics.expert_answered }}</div>
+                            <small class="text-muted">Resolved by experts</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Queries & Quick Actions Row -->
+                <div class="row">
+                    <!-- Recent Queries -->
+                    <div class="col-lg-8 mb-4">
+                        <div class="recent-queries">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4><i class="fas fa-history me-2"></i>Recent Queries</h4>
+                                <a href="/admin/queries" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Query</th>
+                                            <th>Status</th>
+                                            <th>Time</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for query in statistics.recent_queries %}
+                                        <tr>
+                                            <td><code>{{ query.query_id[:8] }}...</code></td>
+                                            <td>{{ query.query_text[:50] }}{% if query.query_text|length > 50 %}...{% endif %}</td>
+                                            <td>
+                                                {% if query.status == 'answered_ai' %}
+                                                <span class="badge bg-success">AI Answered</span>
+                                                {% elif query.status == 'escalated' %}
+                                                <span class="badge bg-warning">Escalated</span>
+                                                {% elif query.status == 'answered_expert' %}
+                                                <span class="badge bg-info">Expert Answered</span>
+                                                {% else %}
+                                                <span class="badge bg-secondary">{{ query.status }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ query.query_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>
+                                                <a href="/admin/query/{{ query.query_id }}" class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="quick-actions">
+                            <h4><i class="fas fa-bolt me-2"></i>Quick Actions</h4>
+                            <div class="d-grid gap-2">
+                                <a href="/expert/dashboard" class="btn btn-warning mb-2">
+                                    <i class="fas fa-hands-helping me-1"></i>Review Escalated Queries
+                                </a>
+                                <a href="/admin/knowledge-base/add" class="btn btn-success mb-2">
+                                    <i class="fas fa-plus-circle me-1"></i>Add Knowledge Article
+                                </a>
+                                <a href="/test-sms" class="btn btn-outline-secondary mb-2">
+                                    <i class="fas fa-comment-sms me-1"></i>Test SMS System
+                                </a>
+                                <a href="/" class="btn btn-outline-primary">
+                                    <i class="fas fa-home me-1"></i>Back to Home
+                                </a>
+                            </div>
+                            
+                            <hr>
+                            
+                            <h5 class="mt-3">System Status</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>SMS Gateway:</span>
+                                <span class="badge bg-success">Online</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Database:</span>
+                                <span class="badge bg-success">Connected</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>NLP Service:</span>
+                                <span class="badge bg-success">Running</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <footer>
+                    <p>AgriChatbot Admin Dashboard &copy; 2025 - Catholic University of Eastern Africa</p>
+                    <p class="small">System Version: 1.0.0 | Last Updated: {{ current_time }}</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple JavaScript to highlight active nav link
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = location.href;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if(link.href === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

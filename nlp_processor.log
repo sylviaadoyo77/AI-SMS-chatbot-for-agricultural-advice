@@ -1,0 +1,117 @@
+2025-09-07 15:33:38,197 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-07 15:35:04,500 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-07 15:35:04,500 - __main__ - INFO - Twilio client initialized successfully
+2025-09-07 15:35:04,588 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-07 15:35:04,588 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-07 15:35:04,592 - werkzeug - INFO -  * Restarting with stat
+2025-09-07 15:35:06,437 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-07 15:36:32,452 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-07 15:36:32,452 - __main__ - INFO - Twilio client initialized successfully
+2025-09-07 15:36:32,514 - werkzeug - WARNING -  * Debugger is active!
+2025-09-07 15:36:32,520 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-07 15:36:32,785 - werkzeug - INFO - 127.0.0.1 - - [07/Sep/2025 15:36:32] "GET / HTTP/1.1" 200 -
+2025-09-08 08:21:08,949 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 08:22:34,734 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 08:22:34,734 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 08:22:34,806 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-08 08:22:34,806 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:22:34,806 - werkzeug - INFO -  * Restarting with stat
+2025-09-08 08:22:36,007 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 08:24:01,425 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 08:24:01,425 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 08:24:01,479 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 08:24:01,479 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-08 08:44:35,662 - werkzeug - INFO -  * Detected change in 'C:\\Users\\sylvi\\OneDrive\\Desktop\\ai_sms_chatbot\\app.py', reloading
+2025-09-08 08:44:35,825 - werkzeug - INFO -  * Restarting with stat
+2025-09-08 08:44:38,167 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 08:47:53,144 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 08:49:18,216 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 08:49:18,217 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 08:49:18,813 - __main__ - INFO - NLP processor initialized successfully
+2025-09-08 08:49:18,886 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-08 08:49:18,887 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 08:49:18,890 - werkzeug - INFO -  * Restarting with stat
+2025-09-08 08:49:19,887 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 08:50:44,780 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 08:50:44,780 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 08:50:45,321 - __main__ - INFO - NLP processor initialized successfully
+2025-09-08 08:50:45,363 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 08:50:45,363 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-08 08:59:43,754 - werkzeug - INFO - 127.0.0.1 - - [08/Sep/2025 08:59:43] "GET / HTTP/1.1" 200 -
+2025-09-08 08:59:44,998 - werkzeug - INFO - 127.0.0.1 - - [08/Sep/2025 08:59:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-08 08:59:59,040 - werkzeug - INFO - 127.0.0.1 - - [08/Sep/2025 08:59:59] "GET /signup HTTP/1.1" 200 -
+2025-09-08 09:01:10,205 - __main__ - INFO - Signup attempt - Type: expert, Username: CynthiaK, Email: cynthia77@gmail.com
+2025-09-08 09:01:10,434 - __main__ - INFO - Password hashed successfully: scrypt:32768:8:1$ZtWguE2WPhwKnFqO$fd4811bd3b0819b5...
+2025-09-08 09:01:10,438 - __main__ - INFO - Generated expert ID: EXP_7cac0413
+2025-09-08 09:01:10,439 - __main__ - ERROR - Database error: 1054 (42S22): Unknown column 'is_active' in 'field list'
+2025-09-08 09:01:10,440 - __main__ - ERROR - Error during signup: 1054 (42S22): Unknown column 'is_active' in 'field list'
+2025-09-08 09:01:10,503 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\sylvi\OneDrive\Desktop\ai_sms_chatbot\venv\Lib\site-packages\mysql\connector\connection_cext.py", line 772, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Unknown column 'is_active' in 'field list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\sylvi\OneDrive\Desktop\ai_sms_chatbot\app.py", line 512, in signup
+    cursor.execute(
+  File "C:\Users\sylvi\OneDrive\Desktop\ai_sms_chatbot\venv\Lib\site-packages\mysql\connector\cursor_cext.py", line 353, in execute
+    self._connection.cmd_query(
+  File "C:\Users\sylvi\OneDrive\Desktop\ai_sms_chatbot\venv\Lib\site-packages\mysql\connector\opentelemetry\context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sylvi\OneDrive\Desktop\ai_sms_chatbot\venv\Lib\site-packages\mysql\connector\connection_cext.py", line 781, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'is_active' in 'field list'
+
+2025-09-08 09:01:10,505 - werkzeug - INFO - 127.0.0.1 - - [08/Sep/2025 09:01:10] "POST /signup HTTP/1.1" 200 -
+2025-09-08 09:11:26,042 - werkzeug - INFO -  * Detected change in 'C:\\Users\\sylvi\\OneDrive\\Desktop\\ai_sms_chatbot\\app.py', reloading
+2025-09-08 09:11:26,168 - werkzeug - INFO -  * Restarting with stat
+2025-09-08 09:11:27,173 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:11:55,263 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:13:20,536 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 09:13:20,536 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 09:13:20,588 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-08 09:13:20,588 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 09:13:20,588 - werkzeug - INFO -  * Restarting with stat
+2025-09-08 09:13:21,695 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:14:47,006 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 09:14:47,007 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 09:14:47,046 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 09:14:47,050 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-08 09:25:09,220 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:26:34,323 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 09:26:34,324 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 09:26:35,403 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:28:00,493 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 09:28:00,493 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 09:28:00,537 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 09:50:11,395 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:51:36,886 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 09:51:36,887 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 09:51:36,921 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 09:51:36,926 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-08 09:55:18,406 - werkzeug - INFO -  * Detected change in 'C:\\Users\\sylvi\\OneDrive\\Desktop\\ai_sms_chatbot\\password_utils.py', reloading
+2025-09-08 09:55:19,576 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 09:56:44,875 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 09:56:44,877 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 09:56:44,914 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 09:56:44,917 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-08 10:03:20,926 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 10:04:46,031 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 10:04:46,034 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 10:04:46,064 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-08 10:04:46,064 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-08 10:04:46,067 - werkzeug - INFO -  * Restarting with stat
+2025-09-08 10:04:46,992 - nlp_processor - INFO - Downloading NLTK data...
+2025-09-08 10:06:12,362 - __main__ - INFO - Database connection pool initialized successfully
+2025-09-08 10:06:12,362 - __main__ - INFO - Twilio client initialized successfully
+2025-09-08 10:06:12,399 - werkzeug - WARNING -  * Debugger is active!
+2025-09-08 10:06:12,402 - werkzeug - INFO -  * Debugger PIN: 307-765-416
+2025-09-08 10:08:35,213 - werkzeug - INFO -  * Detected change in 'C:\\Users\\sylvi\\OneDrive\\Desktop\\ai_sms_chatbot\\nlp_processor.py', reloading
+2025-09-08 10:08:35,345 - werkzeug - INFO -  * Restarting with stat

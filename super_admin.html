@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Dashboard - AgriChatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --super-admin-gradient: linear-gradient(90deg, #8E2DE2 0%, #4A00E0 100%);
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        .super-admin-header {
+            background: var(--super-admin-gradient);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            height: 100%;
+            transition: transform 0.2s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .recent-queries, .quick-actions, .system-stats {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            height: fit-content;
+        }
+        
+        .nav-link {
+            color: #495057;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: #e9ecef;
+            color: #8E2DE2;
+        }
+        
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        .super-admin-badge {
+            background: linear-gradient(90deg, #ff6b6b 0%, #ff8e53 100%);
+        }
+        
+        .admin-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .system-health {
+            border-left: 4px solid #28a745;
+        }
+        
+        .system-health.warning {
+            border-left-color: #ffc107;
+        }
+        
+        .system-health.danger {
+            border-left-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h4 class="mb-4"><i class="fas fa-seedling me-2"></i>AgriChatbot</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/queries">
+                            <i class="fas fa-question-circle me-2"></i>All Queries
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/knowledge-base">
+                            <i class="fas fa-book me-2"></i>Knowledge Base
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/experts">
+                            <i class="fas fa-user-tie me-2"></i>Experts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">
+                            <i class="fas fa-users-cog me-2"></i>Admin Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/approvals">
+                            <i class="fas fa-user-check me-2"></i>Admin Approvals
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/system-logs">
+                            <i class="fas fa-clipboard-list me-2"></i>System Logs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/settings">
+                            <i class="fas fa-cog me-2"></i>System Settings
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a href="/admin/logout" class="nav-link text-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <!-- Header -->
+                <div class="super-admin-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1><i class="fas fa-crown me-2"></i>Super Admin Dashboard</h1>
+                            <p class="mb-0">Welcome, {{ session.get('admin_username', 'Super Admin') }} - Full System Control</p>
+                        </div>
+                        <div>
+                            <span class="badge super-admin-badge text-white p-2">
+                                <i class="fas fa-crown me-1"></i>
+                                Super Administrator
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-question-circle me-2"></i>Total Queries</h5>
+                            <div class="stat-number text-primary">{{ statistics.total_queries }}</div>
+                            <small class="text-muted">All time queries</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-user-clock me-2"></i>Pending Approvals</h5>
+                            <div class="stat-number text-warning">{{ statistics.pending_count }}</div>
+                            <small class="text-muted">Admin registrations awaiting review</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-users me-2"></i>Total Admins</h5>
+                            <div class="stat-number text-info">{{ statistics.total_admins }}</div>
+                            <small class="text-muted">Registered admin users</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mb-3">
+                        <div class="stat-card">
+                            <h5><i class="fas fa-user-tie me-2"></i>Active Experts</h5>
+                            <div class="stat-number text-success">{{ statistics.active_experts }}</div>
+                            <small class="text-muted">Currently active experts</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Super Admin Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <a href="/admin/approvals" class="btn btn-warning me-2">
+                                        <i class="fas fa-user-check me-1"></i>Review Admin Approvals
+                                    </a>
+                                    <a href="/admin/users" class="btn btn-info me-2">
+                                        <i class="fas fa-users-cog me-1"></i>Manage All Admins
+                                    </a>
+                                    <a href="/admin/add-user" class="btn btn-success me-2">
+                                        <i class="fas fa-user-plus me-1"></i>Add New Admin
+                                    </a>
+                                    <a href="/admin/system-health" class="btn btn-outline-secondary">
+                                        <i class="fas fa-heartbeat me-1"></i>System Health
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Statistics & Recent Activity -->
+                <div class="row">
+                    <!-- System Statistics -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="system-stats">
+                            <h4><i class="fas fa-chart-bar me-2"></i>System Statistics</h4>
+                            <div class="row mt-3">
+                                <div class="col-6 mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>AI Answered:</span>
+                                        <strong>{{ statistics.ai_answered }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Escalated Queries:</span>
+                                        <strong>{{ statistics.escalated }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Expert Answered:</span>
+                                        <strong>{{ statistics.expert_answered }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Active Farmers:</span>
+                                        <strong>{{ statistics.active_farmers }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr>
+                            
+                            <h5 class="mt-3">System Health</h5>
+                            <div class="system-health p-3 mb-2">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>SMS Gateway:</span>
+                                    <span class="badge bg-success">Online</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Database:</span>
+                                    <span class="badge bg-success">Connected</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>NLP Service:</span>
+                                    <span class="badge bg-success">Running</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>API Services:</span>
+                                    <span class="badge bg-success">Operational</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Admin Activity -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="recent-queries">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4><i class="fas fa-history me-2"></i>Recent Activity</h4>
+                                <a href="/admin/system-logs" class="btn btn-sm btn-outline-primary">View All Logs</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Activity</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for query in statistics.recent_queries %}
+                                        <tr>
+                                            <td>{{ query.query_timestamp.strftime('%H:%M') }}</td>
+                                            <td>{{ query.query_text[:50] }}{% if query.query_text|length > 50 %}...{% endif %}</td>
+                                            <td><span class="badge bg-{% if query.status == 'answered_ai' %}success{% elif query.status == 'escalated' %}warning{% else %}info{% endif %}">{{ query.status }}</span></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <footer>
+                    <p>AgriChatbot Super Admin Dashboard &copy; 2025 - Catholic University of Eastern Africa</p>
+                    <p class="small">System Version: 1.0.0 | Last Updated: {{ current_time }}</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
